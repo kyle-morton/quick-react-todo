@@ -18,6 +18,25 @@ function CreateButton(props) {
     );
 }
 
+class CreateForm extends React.Component{
+
+    handleChange(event) {
+        this.setState({title: event.target.value});
+    }
+
+    render(props) {
+        return (
+            <form onSubmit={this.props.handleCreate}>
+            <label>
+              Title:
+              <input type="text" value={this.state.title} onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Add To-Do" />
+          </form>
+        );
+    }
+}
+
 class ToDoList extends React.Component {
     constructor(props) {
         super(props);
@@ -34,13 +53,19 @@ class ToDoList extends React.Component {
     }
 
     create() {
-        
+        let todoList = this.state.todos.slice();
+        todoList.push({ title: 'ToDo' + (todoList.length+1) });
+        this.setState({
+            todos: todoList
+        });
     }
 
     render() {
         return (
             <div>
-                To-Do List
+                <h3>To-Do List</h3>
+                <CreateForm handleCreate={(i) => this.create(i)}></CreateForm>
+                {/* <CreateButton onClick={(i) => this.create(i)}></CreateButton> */}
                 <ol>
                     { 
                         this.state.todos.map(todo => {
