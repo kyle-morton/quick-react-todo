@@ -1,0 +1,9 @@
+.to-do-button {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+li.complete {
+    color: green;
+    font-weight: bold;
+}
