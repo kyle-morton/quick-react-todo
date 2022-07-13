@@ -89,18 +89,31 @@ class ToDoList extends React.Component {
         return await response.json();
     }
 
-    createToDo(name) {
+    async createToDo(title) {
+        const response = await fetch(`http://localhost:5176/todo/create`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ title: title })
+          })
+        
+        var todo = await response.json();
+        
         let todoList = this.state.todos.slice();
-        todoList.push({ 
-            title: name, 
-            id: ((new Date().getTime() * 10000) + 621355968000000000)
-        });
+        todoList.push(todo);
         this.setState({
             todos: todoList
         });
     }
 
-    deleteToDo(event, id) {
+    async deleteToDo(event, id) {
+        const response = await fetch(`http://localhost:5176/todo/delete?id=` + id, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ 'id': id})
+          });
+
+        await response.json();
+        
         let todos = this.state.todos.slice().filter(e => {
             if (e.id != id) {
                 return e;
@@ -112,7 +125,15 @@ class ToDoList extends React.Component {
         })
     }
 
-    completeToDo(event, id) {
+    async completeToDo(event, id) {
+        const response = await fetch(`http://localhost:5176/todo/complete?id=` + id, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ 'id': id})
+          });
+
+        await response.json();
+
         let todos = this.state.todos.slice();
         var todo = todos.find(td => {
             if (td.id == id) {

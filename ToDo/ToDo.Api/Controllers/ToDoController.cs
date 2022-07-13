@@ -41,13 +41,9 @@ public class ToDoController : ControllerBase
 
     [HttpPost(Name = "CreateToDo")]
     [Route("Create")]
-    public IActionResult Create(string title)
+    public IActionResult Create(CreateViewModel viewModel)
     {
-        var newToDo = new ToDoItem
-        {
-            Id = (int)DateTime.Now.Ticks,
-            Title = title
-        };
+        var newToDo = viewModel.ToModel();
         _items.Add(newToDo);
 
         return Ok(newToDo);
