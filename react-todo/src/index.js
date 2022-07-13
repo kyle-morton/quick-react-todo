@@ -63,16 +63,30 @@ class ToDoList extends React.Component {
         super(props);
         this.state = {
             todos: [
-                {
-                    title: 'ToDo1',
-                    id: 1
-                },
-                {
-                    title: 'ToDo2',
-                    id: 2
-                }
             ]
         };
+    }
+
+    componentDidMount() {
+        this.asyncRequest = this.getToDos().then(
+            data => {
+                console.log('got a response: ' + data);
+                this.asyncRequest = null;
+                this.setState({
+                    todos: data
+                });
+            }
+        )
+    }
+    
+    async getToDos() {
+        const response = await fetch('http://localhost:5176/todo', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            // body: null
+        });
+
+        return await response.json();
     }
 
     createToDo(name) {
