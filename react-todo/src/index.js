@@ -43,6 +43,9 @@ class CreateForm extends React.Component{
     submit(event) {
         event.preventDefault();
         this.props.handleCreate(this.state.title);
+        this.setState({
+            title: ''
+        });
     }
 
     render(props) {
