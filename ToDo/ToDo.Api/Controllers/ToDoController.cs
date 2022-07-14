@@ -10,22 +10,24 @@ public class ToDoController : ControllerBase
 {
 
     public static List<ToDoItem> _items;
+    private Random _rand;
 
     public ToDoController()
     {
+        _rand = new Random();
         if (_items == null)
         {
             _items = new List<ToDoItem>
             {
                 new ToDoItem
                 {
-                    Id = (int)DateTime.Now.Ticks,
+                    Id = _rand.Next(1, 25000),
                     Title = "Replace Lightbulb",
                     IsComplete = true
                 },
                 new ToDoItem
                 {
-                    Id = (int)DateTime.Now.Ticks,
+                    Id = _rand.Next(1, 25000),
                     Title = "Buy Milk"
                 }
             };
@@ -33,7 +35,7 @@ public class ToDoController : ControllerBase
     }
 
     [HttpGet(Name = "GetToDos")]
-    [Route("Get")]
+    [Route("")]
     public IActionResult Get()
     {
         return Ok(_items);
@@ -50,7 +52,7 @@ public class ToDoController : ControllerBase
     }
 
     [HttpPost(Name = "CompleteToDo")]
-    [Route("Complete")]
+    [Route("Complete/{id:int}")]
     public IActionResult Complete(int id)
     {
         var todo = _items.FirstOrDefault(t => t.Id == id);
@@ -61,11 +63,11 @@ public class ToDoController : ControllerBase
 
         todo.IsComplete = true;
 
-        return Ok();
+        return Ok(new { success = true });
     }
 
     [HttpPost(Name = "DeleteToDo")]
-    [Route("Delete")]
+    [Route("Delete/{id:int}")]
     public IActionResult Delete(int id)
     {
         var todo = _items.FirstOrDefault(t => t.Id == id);
@@ -76,7 +78,7 @@ public class ToDoController : ControllerBase
 
         _items = _items.Where(i => i.Id != id).ToList();
 
-        return Ok();
+        return Ok(new { success = true });
     }
 
 }

@@ -106,10 +106,10 @@ class ToDoList extends React.Component {
     }
 
     async deleteToDo(event, id) {
-        const response = await fetch(`http://localhost:5176/todo/delete?id=` + id, {
+        const response = await fetch(`http://localhost:5176/todo/delete/` + id, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ 'id': id})
+            headers: {'Content-Type': 'text/plain'},
+            // body: JSON.stringify({ 'id': id})
           });
 
         await response.json();
@@ -126,10 +126,10 @@ class ToDoList extends React.Component {
     }
 
     async completeToDo(event, id) {
-        const response = await fetch(`http://localhost:5176/todo/complete?id=` + id, {
+        const response = await fetch(`http://localhost:5176/todo/complete/` + id, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ 'id': id})
+            headers: {'Content-Type': 'text/plain'},
+            // body: JSON.stringify({ 'id': id})
           });
 
         await response.json();

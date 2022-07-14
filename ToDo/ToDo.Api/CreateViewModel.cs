@@ -11,7 +11,7 @@ namespace ToDo.Api
         {
             return new ToDoItem
             {
-                Id = (int)DateTime.Now.Ticks,
+                Id = new Random().Next(1, 25000),
                 Title = Title
             };
         }
